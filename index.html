@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARABIAN FOOD ZONE AND BBQ</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #fff;
+    }
+
+    header {
+      background-color: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: #ff9800;
+    }
+
+    #search {
+      margin-top: 10px;
+      padding: 10px;
+      width: 80%;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .banner {
+      background-color: #222;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid #ff9800;
+    }
+
+    .banner-content h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #ff9800;
+    }
+
+    .banner-content p {
+      margin: 5px 0 0;
+      color: #fff;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .menu-item {
+      background-color: #1e1e1e;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .menu-item img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .menu-item h3 {
+      margin: 10px 0 5px;
+      color: #ff9800;
+    }
+
+    .menu-item p {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    /* Button Styles */
+    .order-now-btn, .add-to-cart-btn, .buy-btn {
+      background-color: #25D366;
+      color: #fff;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+      margin-right: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .buy-btn {
+      background-color: #ff4444;
+    }
+
+    .order-now-btn:hover, .add-to-cart-btn:hover {
+      background-color: #20b858;
+    }
+
+    .buy-btn:hover {
+      background-color: #cc0000;
+    }
+
+    /* Cart Section */
+    .cart-section {
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      margin: 20px;
+      display: none;
+    }
+
+    .cart-section h2 {
+      color: #ff9800;
+      margin-top: 0;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .cart-item button {
+      background-color: #ff4444;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .cart-item button:hover {
+      background-color: #cc0000;
+    }
+
+    .cart-total {
+      font-weight: bold;
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .checkout-btn {
+      background-color: #25D366;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 10px;
+      display: block;
+      text-align: center;
+    }
+
+    .checkout-btn:hover {
+      background-color: #20b858;
+    }
+
+    footer {
+      background-color: #1f1f1f;
+      padding: 10px 0;
+      position: sticky;
+      bottom: 0;
+      text-align: center;
+    }
+
+    footer button {
+      background: none;
+      border: none;
+      color: #ff9800;
+      font-size: 1rem;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    footer button:hover {
+      text-decoration: underline;
+    }
+
+    /* Chatbot Styles */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff9800;
+      color: #fff;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .chatbot-container {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 300px;
+      height: 400px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    .chatbot-header {
+      background-color: #ff9800;
+      padding: 10px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .chatbot-body {
+      height: calc(100% - 100px);
+      padding: 10px;
+      overflow-y: auto;
+      background-color: #222;
+    }
+
+    .chatbot-message {
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    .chatbot-message.bot {
+      background-color: #333;
+      margin-right: 10px;
+    }
+
+    .chatbot-message.user {
+      background-color: #ff9800;
+      margin-left: 10px;
+      text-align: right;
+    }
+
+    .chatbot-footer {
+      padding: 10px;
+      background-color: #1e1e1e;
+      display: flex;
+      gap: 5px;
+    }
+
+    .chatbot-footer input {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+    }
+
+    .chatbot-footer button {
+      background-color: #ff9800;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .whatsapp-btn {
+      background-color: #25D366;
+      color: #fff;
+      padding: 8px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ARABIAN FOOD ZONE AND BBQ</h1>
+    <input type="text" id="search" placeholder="Search for food...">
+  </header>
+
+  <section class="banner">
+    <div class="banner-content">
+      <h2>Try our new Chicken Burger Large</h2>
+      <p>Only at ৳80!</p>
+    </div>
+  </section>
+
+  <section class="cart-section" id="cartSection">
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">Total: ৳0</div>
+    <button class="checkout-btn" id="checkoutBtn">Checkout via WhatsApp</button>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Burger Large">
+      <h3>Chicken Burger Large</h3>
+      <p>৳80</p>
+      <button class="add-to-cart-btn" data-name="Chicken Burger Large" data-price="80">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Burger Large" data-price="80">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Burger Small">
+      <h3>Chicken Burger Small</h3>
+      <p>৳50</p>
+      <button class="add-to-cart-btn" data-name="Chicken Burger Small" data-price="50">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Burger Small" data-price="50">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Regular Naan">
+      <h3>Regular Naan</h3>
+      <p>৳25</p>
+      <button class="add-to-cart-btn" data-name="Regular Naan" data-price="25">Add to Cart</button>
+      <button class="buy-btn" data-name="Regular Naan" data-price="25">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Butter Naan">
+      <h3>Butter Naan</h3>
+      <p>৳30</p>
+      <button class="add-to-cart-btn" data-name="Butter Naan" data-price="30">Add to Cart</button>
+      <button class="buy-btn" data-name="Butter Naan" data-price="30">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Arabian Khepsa + Chicken BBQ">
+      <h3>Arabian Khepsa + Chicken BBQ</h3>
+      <p>৳180</p>
+      <button class="add-to-cart-btn" data-name="Arabian Khepsa + Chicken BBQ" data-price="180">Add to Cart</button>
+      <button class="buy-btn" data-name="Arabian Khepsa + Chicken BBQ" data-price="180">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Biriyani">
+      <h3>Chicken Biriyani</h3>
+      <p>৳120</p>
+      <button class="add-to-cart-btn" data-name="Chicken Biriyani" data-price="120">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Biriyani" data-price="120">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Tandoori Boti Kebab">
+      <h3>Chicken Tandoori Boti Kebab</h3>
+      <p>৳150</p>
+      <button class="add-to-cart-btn" data-name="Chicken Tandoori Boti Kebab" data-price="150">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Tandoori Boti Kebab" data-price="150">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Steak Kebab">
+      <h3>Chicken Steak Kebab</h3>
+      <p>৳150</p>
+      <button class="add-to-cart-btn" data-name="Chicken Steak Kebab" data-price="150">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Steak Kebab" data-price="150">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken BBQ">
+      <h3>Chicken BBQ</h3>
+      <p>৳150</p>
+      <button class="add-to-cart-btn" data-name="Chicken BBQ" data-price="150">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken BBQ" data-price="150">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Wing BBQ">
+      <h3>Chicken Wing BBQ</h3>
+      <p>৳150</p>
+      <button class="add-to-cart-btn" data-name="Chicken Wing BBQ" data-price="150">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Wing BBQ" data-price="150">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Fish BBQ">
+      <h3>Fish BBQ</h3>
+      <p>৳100</p>
+      <button class="add-to-cart-btn" data-name="Fish BBQ" data-price="100">Add to Cart</button>
+      <button class="buy-btn" data-name="Fish BBQ" data-price="100">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Steak Roll">
+      <h3>Chicken Steak Roll</h3>
+      <p>৳100</p>
+      <button class="add-to-cart-btn" data-name="Chicken Steak Roll" data-price="100">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Steak Roll" data-price="100">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Fry">
+      <h3>Chicken Fry</h3>
+      <p>৳100</p>
+      <button class="add-to-cart-btn" data-name="Chicken Fry" data-price="100">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Fry" data-price="100">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Fry Leg Piece">
+      <h3>Chicken Fry Leg Piece</h3>
+      <p>৳60</p>
+      <button class="add-to-cart-btn" data-name="Chicken Fry Leg Piece" data-price="60">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Fry Leg Piece" data-price="60">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Wings Fry">
+      <h3>Chicken Wings Fry</h3>
+      <p>৳100</p>
+      <button class="add-to-cart-btn" data-name="Chicken Wings Fry" data-price="100">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Wings Fry" data-price="100">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Naga Chicken Fry">
+      <h3>Naga Chicken Fry</h3>
+      <p>৳100</p>
+      <button class="add-to-cart-btn" data-name="Naga Chicken Fry" data-price="100">Add to Cart</button>
+      <button class="buy-btn" data-name="Naga Chicken Fry" data-price="100">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Vegetable Shawarma">
+      <h3>Vegetable Shawarma</h3>
+      <p>৳70</p>
+      <button class="add-to-cart-btn" data-name="Vegetable Shawarma" data-price="70">Add to Cart</button>
+      <button class="buy-btn" data-name="Vegetable Shawarma" data-price="70">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Shawarma">
+      <h3>Chicken Shawarma</h3>
+      <p>৳70</p>
+      <button class="add-to-cart-btn" data-name="Chicken Shawarma" data-price="70">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Shawarma" data-price="70">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Steak Shawarma">
+      <h3>Chicken Steak Shawarma</h3>
+      <p>৳120</p>
+      <button class="add-to-cart-btn" data-name="Chicken Steak Shawarma" data-price="120">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Steak Shawarma" data-price="120">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Vegetable Pasta">
+      <h3>Vegetable Pasta</h3>
+      <p>৳80</p>
+      <button class="add-to-cart-btn" data-name="Vegetable Pasta" data-price="80">Add to Cart</button>
+      <button class="buy-btn" data-name="Vegetable Pasta" data-price="80">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Pasta">
+      <h3>Chicken Pasta</h3>
+      <p>৳80</p>
+      <button class="add-to-cart-btn" data-name="Chicken Pasta" data-price="80">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Pasta" data-price="80">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Egg Pasta">
+      <h3>Egg Pasta</h3>
+      <p>৳80</p>
+      <button class="add-to-cart-btn" data-name="Egg Pasta" data-price="80">Add to Cart</button>
+      <button class="buy-btn" data-name="Egg Pasta" data-price="80">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Chicken Chow Mein">
+      <h3>Chicken Chow Mein</h3>
+      <p>৳80</p>
+      <button class="add-to-cart-btn" data-name="Chicken Chow Mein" data-price="80">Add to Cart</button>
+      <button class="buy-btn" data-name="Chicken Chow Mein" data-price="80">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Egg Chow Mein">
+      <h3>Egg Chow Mein</h3>
+      <p>৳80</p>
+      <button class="add-to-cart-btn" data-name="Egg Chow Mein" data-price="80">Add to Cart</button>
+      <button class="buy-btn" data-name="Egg Chow Mein" data-price="80">Buy</button>
+    </div>
+    <div class="menu-item">
+      <img src="https://via.placeholder.com/150" alt="Vegetable Chow Mein">
+      <h3>Vegetable Chow Mein</h3>
+      <p>৳80</p>
+      <button class="add-to-cart-btn" data-name="Vegetable Chow Mein" data-price="80">Add to Cart</button>
+      <button class="buy-btn" data-name="Vegetable Chow Mein" data-price="80">Buy</button>
+    </div>
+  </section>
+
+  <footer>
+    <nav>
+      <button onclick="showSection('menu')">Home</button>
+      <button onclick="showSection('cartSection')">Cart</button>
+      <button>Orders</button>
+      <button>Profile</button>
+    </nav>
+  </footer>
+
+  <!-- Chatbot Button -->
+  <button class="chatbot-btn" id="chatbotToggle">💬</button>
+
+  <!-- Chatbot Container -->
+  <div class="chatbot-container" id="chatbotContainer">
+    <div class="chatbot-header">Arabian Caffe Bot</div>
+    <div class="chatbot-body" id="chatbotBody">
+      <div class="chatbot-message bot">Welcome to Arabian Caffe! How can I assist you today?</div>
+      <div class="chatbot-message bot">
+        For direct assistance, contact us on WhatsApp:
+        <a href="https://wa.me/8801781448023" target="_blank" class="whatsapp-btn">Chat on WhatsApp</a>
+      </div>
+    </div>
+    <div class="chatbot-footer">
+      <input type="text" id="chatbotInput" placeholder="Type a message...">
+      <button id="chatbotSend">Send</button>
+    </div>
+  </div>
+
+  <script>
+    // Cart array to store items
+    let cart = [];
+
+    // Search functionality
+    document.getElementById("search").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const items = document.querySelectorAll(".menu-item");
+      items.forEach(item => {
+        const name = item.querySelector("h3").innerText.toLowerCase();
+        item.style.display = name.includes(query) ? "block" : "none";
+      });
+    });
+
+    // Add to cart functionality
+    document.querySelectorAll(".add-to-cart-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const name = button.getAttribute("data-name");
+        const price = parseFloat(button.getAttribute("data-price"));
+        addToCart(name, price);
+      });
+    });
+
+    // Buy functionality
+    document.querySelectorAll(".buy-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const name = button.getAttribute("data-name");
+        const price = parseFloat(button.getAttribute("data-price"));
+        buyNow(name, price);
+      });
+    });
+
+    function addToCart(name, price) {
+      const existingItem = cart.find(item => item.name === name);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ name, price, quantity: 1 });
+      }
+      updateCart();
+    }
+
+    function buyNow(name, price) {
+      const orderMessage = `I want to order:\n${name} x1 - ৳${price}\nTotal: ৳${price}`;
+      const encodedMessage = encodeURIComponent(orderMessage);
+      window.open(`https://wa.me/8801781448023?text=${encodedMessage}`, "_blank");
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById("cartItems");
+      const cartTotal = document.getElementById("cartTotal");
+      const cartSection = document.getElementById("cartSection");
+
+      cartItems.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+        const cartItem = document.createElement("div");
+        cartItem.className = "cart-item";
+        cartItem.innerHTML = `
+          <span>${item.name} x${item.quantity} - ৳${item.price * item.quantity}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItems.appendChild(cartItem);
+      });
+
+      cartTotal.textContent = `Total: ৳${total}`;
+      cartSection.style.display = cart.length > 0 ? "block" : "none";
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    // Checkout via WhatsApp
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      let orderMessage = "I want to order:\n";
+      let total = 0;
+      cart.forEach(item => {
+        orderMessage += `${item.name} x${item.quantity} - ৳${item.price * item.quantity}\n`;
+        total += item.price * item.quantity;
+      });
+      orderMessage += `Total: ৳${total}`;
+
+      const encodedMessage = encodeURIComponent(orderMessage);
+      window.open(`https://wa.me/8801781448023?text=${encodedMessage}`, "_blank");
+
+      // Clear cart after checkout
+      cart = [];
+      updateCart();
+    });
+
+    // Show section functionality
+    function showSection(sectionId) {
+      document.getElementById("menu").style.display = sectionId === "menu" ? "grid" : "none";
+      document.getElementById("cartSection").style.display = sectionId === "cartSection" ? "block" : "none";
+    }
+
+    // Chatbot functionality
+    const chatbotToggle = document.getElementById("chatbotToggle");
+    const chatbotContainer = document.getElementById("chatbotContainer");
+    const chatbotBody = document.getElementById("chatbotBody");
+    const chatbotInput = document.getElementById("chatbotInput");
+    const chatbotSend = document.getElementById("chatbotSend");
+
+    // Toggle chatbot visibility
+    chatbotToggle.addEventListener("click", () => {
+      chatbotContainer.style.display = chatbotContainer.style.display === "block" ? "none" : "block";
+    });
+
+    // Send message
+    function sendMessage() {
+      const message = chatbotInput.value.trim();
+      if (!message) return;
+
+      // Add user message
+      const userMessage = document.createElement("div");
+      userMessage.className = "chatbot-message user";
+      userMessage.textContent = message;
+      chatbotBody.appendChild(userMessage);
+
+      // Add bot response
+      const botMessage = document.createElement("div");
+      botMessage.className = "chatbot-message bot";
+      botMessage.textContent = getBotResponse(message.toLowerCase());
+      chatbotBody.appendChild(botMessage);
+
+      // Clear input
+      chatbotInput.value = "";
+
+      // Scroll to bottom
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    // Simple bot responses
+    function getBotResponse(message) {
+      if (message.includes("menu")) {
+        return "Check out our menu above! We have Chicken Burger Large, Chicken Shawarma, Chicken Biriyani, Chicken Tandoori Boti Kebab, Vegetable Chow Mein, and more!";
+      } else if (message.includes("order") || message.includes("cart")) {
+        return "You can add items to your cart by clicking 'Add to Cart' or buy directly with the 'Buy' button. View your cart and checkout via WhatsApp from the Cart section!";
+      } else if (message.includes("price")) {
+        return "Our prices are listed on the menu. For example, Chicken Burger Large is ৳80, Chicken Shawarma is ৳70, and Regular Naan is ৳25!";
+      } else {
+        return "I'm here to help! Ask about our menu, add items to your cart, buy directly, or contact us on WhatsApp.";
+      }
+    }
+
+    // Send message on button click
+    chatbotSend.addEventListener("click", sendMessage);
+
+    // Send message on Enter key
+    chatbotInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>
